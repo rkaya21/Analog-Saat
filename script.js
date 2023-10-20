@@ -1,44 +1,44 @@
-// Get references to DOM elements
+// DOM öğelerine referans alın
 const body = document.querySelector("body"),
   hourHand = document.querySelector(".hour"),
   minuteHand = document.querySelector(".minute"),
   secondHand = document.querySelector(".second"),
   modeSwitch = document.querySelector(".mode-switch");
 
-// check if the mode is already set to "Dark Mode" in localStorage
+// Eğer mod localStorage'da zaten "Dark Mode" olarak ayarlanmışsa kontrol et
 if (localStorage.getItem("mode") === "Dark Mode") {
-  // add "dark" class to body and set modeSwitch text to "Light Mode"
+  // "dark" sınıfını body'ye ekle ve modeSwitch metnini "Light Mode" olarak ayarla
   body.classList.add("dark");
-  modeSwitch.textContent = "Light Mode";
+  modeSwitch.textContent = "Açık Mod";
 }
 
-// add a click event listener to modeSwitch
+// modeSwitch'e tıklama olayı ekle
 modeSwitch.addEventListener("click", () => {
-  // toggle the "dark" class on the body element
+  // body öğesindeki "dark" sınıfını değiştir
   body.classList.toggle("dark");
-  // check if the "dark" class is currently present on the body element
+  // "dark" sınıfının şu anda body öğesinde olup olmadığını kontrol et
   const isDarkMode = body.classList.contains("dark");
-  // set modeSwitch text based on "dark" class presence
-  modeSwitch.textContent = isDarkMode ? "Light Mode" : "Dark Mode";
-  // set localStorage "mode" item based on "dark" class presence
+  // "dark" sınıfının varlığına göre modeSwitch metnini ayarla
+  modeSwitch.textContent = isDarkMode ? "Açık Mod" : "Koyu Mod";
+  // "dark" sınıfının varlığına göre localStorage "mode" öğesini ayarla
   localStorage.setItem("mode", isDarkMode ? "Dark Mode" : "Light Mode");
 });
 
 const updateTime = () => {
-  // Get current time and calculate degrees for clock hands
+  // Geçerli zamanı al ve saat ibrelerinin derecelerini hesapla
   let date = new Date(),
     secToDeg = (date.getSeconds() / 60) * 360,
     minToDeg = (date.getMinutes() / 60) * 360,
     hrToDeg = (date.getHours() / 12) * 360;
 
-  // Rotate the clock hands to the appropriate degree based on the current time
+  // Saat ibrelerini geçerli zamana göre uygun dereceye döndür
   secondHand.style.transform = `rotate(${secToDeg}deg)`;
   minuteHand.style.transform = `rotate(${minToDeg}deg)`;
   hourHand.style.transform = `rotate(${hrToDeg}deg)`;
 };
 
-// call updateTime to set clock hands every second
+// Saat ibrelerini her saniye ayarlamak için updateTime'i çağırın
 setInterval(updateTime, 1000);
 
-//call updateTime function on page load
+// Sayfa yüklendiğinde updateTime fonksiyonunu çağır
 updateTime();
